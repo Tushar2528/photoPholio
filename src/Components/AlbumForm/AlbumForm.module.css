@@ -1,0 +1,55 @@
+
+
+.formbody{
+    padding: 4% 2%;
+    height: 70%;
+    width: 90%;
+    position: relative;
+    /* border: 2px solid black; */
+    text-align: center;
+    margin-top: 2%;
+    left: 5%;
+    border-radius: 30px;
+    background-color: 	#ECECEC;
+    
+
+}
+
+.formbody input, button{
+    margin : 2% 1%;
+}
+.cancelbtn{
+    position: absolute;
+    left: 87%;
+    bottom: -1%;
+    color: red;
+    background-color: #FFCECC;
+    border: 2px solid red;
+}
+
+.clearbtn{
+    color: white;
+    background-color: red;
+    border: 0;
+}
+
+.createbtn{
+    color: white;
+    background-color: blue;
+    border: 0;
+}
+
+.formbody input{
+    width: 30%;
+    padding: 1%;
+    font-size: larger;
+    border-radius: 25px;
+    border: 0;
+}
+
+.formbody button{
+    padding: 0.7% 2%;
+    border-radius: 15px;
+    font-size: larger;
+    
+}

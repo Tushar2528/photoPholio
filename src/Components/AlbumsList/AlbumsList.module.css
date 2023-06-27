@@ -1,0 +1,75 @@
+.main{
+    margin-top: 2%;
+    height: 100vh;
+    width: 80%;
+    /* border: 2px solid black; */
+    position: relative;
+    left: 12%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 6%;
+    
+}
+.innerdiv{
+    background-color: #dddddd;
+    position: relative;
+    height: 25%;
+    width: 20%;
+    /* border: 2px solid black; */
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s all ease-in-out;
+}
+.innerdiv:hover{
+    background-color: #90b1db;
+    color: white;
+}
+
+.icon{
+    /* position: absolute; */
+    width: 93%;
+    height: 70%;
+    margin: 3%;
+    /* border: 2px solid black; */
+    border-radius: 15px;
+    left: 0.5%;
+    background-color: white;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon div{
+    height: 50%;
+    width: 28%;
+}
+
+.icon div img{
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.main div p{
+    height: 30%;
+    width: 90%;
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+    
+    /* position: absolute; */
+}
+
+.Addbtn{
+    padding: 0.8% 2%;
+    border-radius: 15px;
+    /* border: 1px solid #236c66; */
+    border: 0;
+    background-color: #7BB4E3;
+    color: 	white;
+    font-size: large;
+  }
+  

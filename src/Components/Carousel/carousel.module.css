@@ -1,0 +1,42 @@
+.carousel {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    height: 60%;
+    width: 40%;
+    border-radius: 20px;
+    z-index: 1000;
+  }
+  
+  .imageContainer {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+  }
+  
+  .imageContainer img {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 20px 20px 10px #888888;
+  }
+  
+  .button{
+    padding: 1% 2%;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: #4e97d1;
+  }
+
+  .cancel{
+    height: 10%;
+    width: 8%;
+    font-weight: bold;
+    border: 0;
+    border-radius: 50%;
+    color: white;
+    background-color: 	#ff0000;
+  }
