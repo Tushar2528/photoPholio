@@ -60,19 +60,19 @@ export default function ImageList(props) {
       title: imageData.title,
       url: imageData.url
     });
-    console.log("Executing!!");
+    
   }
 
   
   function showhideCarousel(image) {
     setCarouselImage(image);
-    console.log("It works!!");
+    
   }
 
 
   // Function to close carousel
   function closeCarousel() {
-    console.log("Close carousel!!");
+   
     setCarouselImage(null);
   }
 
@@ -83,7 +83,7 @@ export default function ImageList(props) {
     seteditImageToggle(!editImageToggle);
     settoeditImage(data);
     
-    console.log("Image data: ", data);
+    
     props.showImgForm();
 
   }

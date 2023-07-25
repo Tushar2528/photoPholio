@@ -28,7 +28,7 @@ export default function AlbumsList(props){
             
         });
         toast.success('Album added successfully!');
-        console.log("Executing!!");
+        
       
       }
       
