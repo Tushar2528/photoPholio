@@ -3,14 +3,14 @@ import albumStyles from "./AlbumsList.module.css";
 import AlbumForm from "../AlbumForm/AlbumForm";
 import ImageList from "../ImageList/ImageList";
 import photos from "../../Images/photos.png";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //Import fireStore reference from frebaseInit file
 import {db} from "../../firebaseinit";
 
 //Import all the required functions from fireStore
-import { collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot, doc, getDoc } from 'firebase/firestore';
 
 
 
@@ -23,7 +23,7 @@ export default function AlbumsList(props){
 
     async function addAlbumTodb(albumName) {
         // Add the album to the "albums" collection
-        const albumDocRef = await addDoc(collection(db, 'albums'),
+        await addDoc(collection(db, 'albums'),
          { name: albumName
             
         });
@@ -34,9 +34,11 @@ export default function AlbumsList(props){
       
 
 
-
+    // Using useEffect hook to render all the albums on the screen on every update 
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, "albums"), (snapShot) => {
+
+        // Using snapshot method of firebase to extract real time albums data from firestore
+        onSnapshot(collection(db, "albums"), (snapShot) => {
             const albums = snapShot.docs.map((doc) => {
                 return {
                     id : doc.id,
@@ -53,22 +55,17 @@ export default function AlbumsList(props){
 
 
 
-    function handleprint(){
-        console.log("It works!!");
-        props.showImageList();
-
-    }
 
     async function handleAlbumClick(album, albumId) {
-        const albumRef = doc(db, "albums", albumId); // Get the reference to the album document
+
+        // Get the reference to the album document
+        const albumRef = doc(db, "albums", albumId); 
         const docSnap = await getDoc(albumRef);
 
-        // if (docSnap.exists()) {
-        //     console.log("Document data:", docSnap.data().name);
-        //   }
-
         
-        const imagesCollectionRef = collection(albumRef, "images"); // Get the reference to the images subcollection
+
+        // Get the reference to the images subcollection
+        const imagesCollectionRef = collection(albumRef, "images"); 
       
         // Fetch the images from the images subcollection
         onSnapshot(imagesCollectionRef, (snapshot) => {
@@ -77,6 +74,7 @@ export default function AlbumsList(props){
             ...doc.data(),
           }));
       
+          // Setting all the states and calling functions to render approprite components on the screen
           setSelectedAlbumImages(images);
           setSelectedAlbum(albumId);
           setSelectedAlbumName(docSnap.data().name);
@@ -108,7 +106,7 @@ export default function AlbumsList(props){
                         <div className={albumStyles.innerdiv} key = {album.id} onClick={() => handleAlbumClick(album,album.id)}>
                             <div className={albumStyles.icon}>
                                 <div>
-                                    <img src={photos}></img>
+                                    <img src={photos} alt=""></img>
                                 </div>
                             </div>
                             <div>

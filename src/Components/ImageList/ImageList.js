@@ -8,7 +8,7 @@ import { collection, addDoc, onSnapshot, deleteDoc, doc , updateDoc} from 'fireb
 import edit from "../../Images/pen.png";
 import del from "../../Images/delete.png";
 import back from "../../Images/back.png";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function ImageList(props) {
@@ -46,52 +46,37 @@ export default function ImageList(props) {
   };
   
 
-//   const handleAddImage = (e) => {
-//     e.preventDefault();
-//     // Handle the logic for adding the image
-//     const title = titleRef.current.value;
-//     const url = urlRef.current.value;
-//     addImageToDb({title, url});
-//     titleRef.current.value = "";
-//     urlRef.current.value = "";
-//     props.showImgForm();
-
-//   };
-
+  // Handle the logic for cancelling
   const handleCancel = (e) => {
     e.preventDefault();
     props.showImgForm();
-    // Handle the logic for cancelling
+    
   };
-
-
-
-
-
-
-
-
 
 
   async function addImageToDb(imageData) {
     // Add the image to the "images" collection of the selected album
-    const imageDocRef = await addDoc(collection(db, `albums/${props.selectedAlbum}/images`),{
+    await addDoc(collection(db, `albums/${props.selectedAlbum}/images`),{
       title: imageData.title,
       url: imageData.url
     });
     console.log("Executing!!");
   }
 
+  
   function showhideCarousel(image) {
     setCarouselImage(image);
     console.log("It works!!");
   }
 
+
+  // Function to close carousel
   function closeCarousel() {
     console.log("Close carousel!!");
     setCarouselImage(null);
   }
 
+  // Function to open the edit input fields on clicking the edit button
   async function editImage(e, data){
     e.stopPropagation();
     
@@ -101,9 +86,9 @@ export default function ImageList(props) {
     console.log("Image data: ", data);
     props.showImgForm();
 
-    
-
   }
+
+  // Function to delete image from the firestore DB
 
   async function removeImage(e,id){
     e.stopPropagation();
@@ -113,6 +98,7 @@ export default function ImageList(props) {
     toast.success('Image deleted successfully!');
   }
 
+  // Using snapshot method of firebase to get the real time data of images to render on screen
   useEffect(() => {
     const unsub = onSnapshot(collection(db, `albums/${props.selectedAlbum}/images`), (snapshot) => {
       const images = snapshot.docs.map((doc) => {
@@ -132,12 +118,12 @@ export default function ImageList(props) {
     <>
 
         {carouselImage && <Carousel selectedAlbumImage={[carouselImage]} selectedAlbumImages={props.selectedAlbumImages} closeCarousel={closeCarousel}/>}
-      {/* <div className={imagelistStyles.mainDiv}> */}
+     
 
       <div className={`${imagelistStyles.mainDiv} ${carouselImage ? imagelistStyles.carouselOpen : ""}`}>
         <h1>Images in {props.selectedAlbumName}</h1>
         
-        <button className={imagelistStyles.backbtn} onClick={props.showImageList}><img src={back}></img></button>
+        <button className={imagelistStyles.backbtn} onClick={props.showImageList}><img src={back} alt=""></img></button>
         {props.imgform ? <ImageForm showImgForm={props.showImgForm} 
                                     addImageToDb={addImageToDb} 
                                     selectedAlbumName={props.selectedAlbumName}     
@@ -157,10 +143,10 @@ export default function ImageList(props) {
                     
                     <div className={imagelistStyles.imagediv} onClick={() => showhideCarousel(image)}>
                         <div className={imagelistStyles.editicon} onClick={(e) => editImage(e, image)}>
-                            <img src={edit} />
+                            <img src={edit} alt=""/>
                         </div>
                         <div className={imagelistStyles.delicon} onClick={(e) => removeImage(e,image.id)}>
-                            <img src={del} />
+                            <img src={del} alt=""/>
                         </div>
                         
                         <img src={image.url} alt={image.title} />
@@ -196,75 +182,3 @@ export default function ImageList(props) {
 
 
 
-// import { useEffect, useState } from "react";
-// import imagelistStyles from "./ImageList.module.css";
-// import ImageForm from "../ImageForm/ImageForm";
-// import Carousel from "../Carousel/carousel";
-// import { db } from "../../firebaseinit";
-// import { collection, addDoc, onSnapshot } from 'firebase/firestore';
-
-// export default  function ImageList(props){
-
-
-//     const [images, setImages] = useState([]);
-//     const [carousel, setCarousel] = useState(false);
-//     // const [selectedImage, setSelectedImage] = useState(null);
-
-//     async function addImageToDb(imageData) {
-//         // Add the image to the "images" collection of the selected album
-//         const imageDocRef = await addDoc(collection(db, `albums/${props.selectedAlbum}/images`),{
-//             title : imageData.title,
-//             url : imageData.url
-//         });
-//         console.log("Executing!!");
-//     }
-
-//     function showhideCarousel() {
-//         // setSelectedImage(image);
-//         setCarousel(!carousel);
-//         console.log("It works!!");
-//       }
-    
-
-//     useEffect(() => {
-//         const unsub = onSnapshot(collection(db, `albums/${props.selectedAlbum}/images`), (snapshot) => {
-//         const images = snapshot.docs.map((doc) => {
-//             return {
-//             id: doc.id,
-//             ...doc.data()
-//             };
-//         });
-
-//         setImages(images);
-//         });
-
-//         return () => unsub(); // Clean up the snapshot listener when the component unmounts
-//     }, [props.selectedAlbum]);
-
-
-//     return (
-//         <>
-//             <div className={imagelistStyles.mainDiv}>
-//                 {props.imgform ? <ImageForm showImgForm={props.showImgForm} addImageToDb={addImageToDb}/> : <button onClick={props.showImgForm}>Add Image</button>}
-//                 <div className={imagelistStyles.container}>
-//                     {images.map((image) => {
-//                         return(
-//                             <div className={imagelistStyles.imagediv} onClick={showhideCarousel}>
-//                                 <img src={image.url}></img>
-//                                 <p>{image.title}</p>
-//                             </div>
-//                         )
-//                     })}
-                
-//                 </div>
-
-//                 {carousel ? <Carousel selectedAlbumImages={props.selectedAlbumImages}/> : null}
-//                 {/* {carousel && <Carousel selectedImage={selectedImage} />} */}
-                
-                
-
-
-//             </div>
-//         </>
-//     )
-// }

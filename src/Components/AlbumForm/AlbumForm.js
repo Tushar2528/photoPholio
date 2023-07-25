@@ -1,19 +1,12 @@
-import { useState , useRef} from "react";
+import { useRef} from "react";
 import formStyles from "./AlbumForm.module.css";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-//Import fireStore reference from frebaseInit file
-import {db} from "../../firebaseinit";
-
-//Import all the required functions from fireStore
-import { collection, addDoc, getDocs, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
 export default function AlbumForm(props){
 
-    const [display, setDisplay] = useState(true);
     const nameRef = useRef(null);
 
+    //To stop the page from refeshing after every submit
     async function handleSubmit(e){
         e.preventDefault();
     }
@@ -22,6 +15,7 @@ export default function AlbumForm(props){
         e.preventDefault();
     }
 
+    // To create a new album - passing the current value of the input field to the addAlbumTodb function in parent
     function handleCreate(e){
         e.preventDefault();
         const albumName = nameRef.current.value;
